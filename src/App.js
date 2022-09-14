@@ -7,7 +7,7 @@ function App() {
 
   let [글제목, 글제목변경] = useState(['남자 코트 추천','남자 신발 추천', '남자 팬티 추천']);
   let [따봉, 따봉변경] = useState(0);
-  let posts = '강남 고기 맛집'
+  let [modal, setModal] = useState(false); //false== state of modal, but the type can be int, string...
 
   function 제목바꾸기(){
     var newArray = [...글제목];
@@ -19,6 +19,14 @@ function App() {
     var sortedArray = [...글제목];
     sortedArray.sort();
     글제목변경(sortedArray);
+  }
+
+  function ModalControl(){
+    if (modal == true){
+      setModal(false)
+    }else{
+      setModal(true)
+    }
   }
   
   return (
@@ -42,17 +50,25 @@ function App() {
       <hr/>
      </div>
      <div className="list">
-      <h3> {글제목[2]} </h3>
+      <h3 onClick={ModalControl}> {글제목[2]} </h3>
       <p>published 12th Sep</p>
       <hr/>
      </div>
     
-     <Modal />
+
+     {
+      modal == true ? <Modal /> : null
+     }
 
 
     </div>
   );
 }
+
+//the step making dinamic UI
+//1. Complete the design in advance using HTML CSS
+//2. Save the current state of the UI as 'state'
+//3. Write what it looks like according to the UI 
 
 // the wat to make component
 // 1. name should start Uppercase
