@@ -6,7 +6,7 @@ import './App.css';
 function App() {
 
   let [글제목, 글제목변경] = useState(['남자 코트 추천','남자 신발 추천', '남자 팬티 추천']);
-  let [따봉, 따봉변경] = useState(0);
+  let [따봉, 따봉변경] = useState([0,0,0]);
   let [modal, setModal] = useState(false); //false== state of modal, but the type can be int, string...
 
   function 제목바꾸기(){
@@ -28,6 +28,13 @@ function App() {
       setModal(true)
     }
   }
+
+
+  function 따봉더하기(i){
+    var newArray = [...따봉];
+    newArray[i] += 1;
+    따봉변경(newArray);
+  }
   
   return (
     <div className="App">
@@ -39,7 +46,7 @@ function App() {
      <button onClick={가나다순정렬}>가나다순정렬</button>
      
      <button onClick={제목바꾸기}>글제목수정</button>
-     <div className="list">
+     {/* <div className="list">
       <h3> {글제목[0]} <span onClick={()=>{따봉변경(따봉+1)}}>👍</span> {따봉} </h3>
       <p>published 12th Sep</p>
       <hr/>
@@ -53,8 +60,24 @@ function App() {
       <h3 onClick={ModalControl}> {글제목[2]} </h3>
       <p>published 12th Sep</p>
       <hr/>
-     </div>
-    
+     </div> */}
+
+     {
+      글제목.map(function(a, i){ //parameter a --> each element in 글제목(array)
+        return(
+          <div className="list" key={i}>
+            <h3> {a} <span onClick={  ()=>{
+               var newArray = [...따봉];
+               newArray[i] += 1;
+               따봉변경(newArray);
+
+            }    }>👍</span> {따봉[i]} </h3>
+            <p>published 12th Sep</p>
+            <hr/>
+          </div>
+        )
+      })
+     }   
 
      {
       modal == true ? <Modal /> : null
