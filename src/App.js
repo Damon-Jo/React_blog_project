@@ -10,6 +10,8 @@ function App() {
   let [modal, setModal] = useState(false); //false== state of modal, but the type can be int, string...
 
   let [title, setTitle] = useState(0);
+  let [입력값, 입력값변경] = useState('');
+  let [블로그제목, 블로그제목변경] = useState('개발 blog');
 
   function 제목바꾸기(){
     var newArray = [...글제목];
@@ -42,7 +44,7 @@ function App() {
   return (
     <div className="App">
      <div className="black-nav">
-      <h4>개발 Blog</h4>
+      <h4>{블로그제목}</h4>
      </div>
 
      {/* 숙제 : 버튼 누르면 ->글제목 가나다순 정렬 기능 만들기 */}
@@ -69,15 +71,37 @@ function App() {
       글제목.map(function(a, i){ //parameter a --> each element in 글제목(array)
         return(
           <div className="list" key={i}>
-            <h3 onClick={()=>{setModal(true); setTitle(i)}}> {a} <span onClick={  ()=>{
-              따봉더하기(i);
-            }    }>👍</span> {따봉[i]} </h3>
+            <h3 onClick={()=>{setModal(!modal); setTitle(i)}}> {a} <span onClick={  
+              (e)=>{따봉더하기(i); e.stopPropagation();}    
+              }>👍</span> {따봉[i]} <button onClick={(ee)=>{
+                ee.stopPropagation();
+                var new글제목 = [...글제목]
+                //new글제목.splice(i,1);
+                new글제목.pop(i);
+                글제목변경(new글제목);
+
+
+              }
+              }>삭제</button></h3>
             <p>published 12th Sep</p>
             <hr/>
           </div>
         )
       })
-     }   
+     }
+
+     <input onChange={(e)=>{
+      입력값변경(e.target.value);
+      console.log(입력값);
+    }}/><button onClick={()=>{
+      // var new블로그이름 = {입력값}
+
+        var new글제목 = [...글제목]
+       //new글제목.unshift(입력값)
+        new글제목.push(입력값)
+        글제목변경(new글제목);
+      }
+    }>글추가</button>   
 
 {/* How to transmit the state from parent to children? --->props */}
 {/* 1. <in children component name={state name}> */}
